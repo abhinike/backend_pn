@@ -10,7 +10,6 @@ from io import BytesIO
 import requests
 import tensorflow as tf
 from keras.preprocessing.image import load_img, img_to_array
-import os
 
 app = Flask(__name__)
 
