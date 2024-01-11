@@ -1,4 +1,5 @@
 Flask
+pickle==4.0
 tensorflow
 opencv-python
 numpy 
