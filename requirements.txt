@@ -1,9 +1,7 @@
 Flask
 tensorflow
-cv2
+opencv-python
 numpy 
 pandas
-PIL
-io
-requests
+Pillow
 Gunicorn
