@@ -1,6 +1,5 @@
 Flask
 tensorflow
-pickle
 cv2
 numpy 
 pandas
