@@ -2,7 +2,8 @@ Flask
 tensorflow
 pickle
 cv2
-numpy pandas
+numpy 
+pandas
 PIL
 io
 requests
