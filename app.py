@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
 import cv2 as cv
 import numpy as np
@@ -9,11 +9,8 @@ from PIL import Image
 from io import BytesIO
 import requests
 import tensorflow as tf
-from keras.preprocessing.image import load_img, img_to_array
 
 app = Flask(__name__)
-
-
 
 # Load the pre-trained model
 with open('Mode_rfl.pkl', 'rb') as file:
@@ -28,48 +25,6 @@ def download_image_from_url(image_url):
     else:
         print(f"Failed to download image from URL. Status code: {response.status_code}")
         return None
-    
-
-
-
-
-    # Load the Keras model
-    model = tf.keras.models.load_model(filepath=model_path)
-
-    # Download and save the image to a local path
-    img = download_image_from_url(img_url)
-    if img is not None:
-        local_image_path = 'downloaded_image.jpg'  # Change this to your desired local path
-        img.save(local_image_path)
-
-        # Read the saved image using OpenCV
-        # img_array = cv2.imread(local_image_path)
-
-        img = img_to_array(load_img("downloaded_image.jpg", target_size=(150,150,3)))
-        img = img * (1./255)
-
-        VizGradCAM(model,img, plot_results=True, interpolant=0.5)
-        img = np.expand_dims(img, axis=0)
-        pred= model.predict(img)
-        print(pred)
-
-        # Upload the heatmap image directly to Firebase Storage
-        heatmap_url = upload_heatmap_to_storage(load_img("downloaded_image.jpg", target_size=(150,150,3)))
-
-        # Delete the locally saved image
-        os.remove(local_image_path)
-
-        return heatmap_url
-        
-
-    return None
-
-
-
-
-
-
-
 
 def predict_pneumonia(img_url):
     img = download_image_from_url(img_url)
@@ -100,6 +55,10 @@ def predict_pneumonia(img_url):
         else:
             return "Viral Pneumonia"
 
+@app.route('/')
+def home():
+    return "Welcome to the Pneumonia Detection API!"
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
@@ -110,12 +69,13 @@ def predict():
         result = predict_pneumonia(img_url)
         print(result)
 
-        # Generate the heatmap and get the heatmap URL
-       
-
         return jsonify({'result': result})
     except Exception as e:
         return jsonify({'error': str(e)})
+
+@app.route('/running')
+def running():
+    return "The server is running!"
 
 if __name__ == '__main__':
     app.run(debug=True)
