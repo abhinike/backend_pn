@@ -1,5 +1,4 @@
 Flask
-pickle5
 tensorflow
 opencv-python
 numpy 
