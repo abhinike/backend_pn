@@ -4,5 +4,6 @@ opencv-python
 numpy 
 pandas
 Pillow
+keras 
 scikit-learn
-Gunicorn
+gunicorn
