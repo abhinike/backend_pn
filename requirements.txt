@@ -1,9 +1,7 @@
 Flask
-tensorflow-cpu
 opencv-python
 numpy 
-pandas
-Pillow
 keras 
 scikit-learn==1.2.2
 gunicorn
+requests
