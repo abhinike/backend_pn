@@ -1,6 +1,7 @@
 Flask
 opencv-python
 numpy 
+pandas 
 keras 
 scikit-learn==1.2.2
 gunicorn
